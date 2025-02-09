@@ -1,0 +1,43 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment (uv, venv, conda)
+.venv/
+env/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.python-version
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.eggs/
+wheelhouse/
+
+# Installer logs
+poetry.lock
+Pipfile.lock
+
+# Unit test / coverage reports
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# VSCode / JetBrains IDE settings
+.vscode/
+.idea/
+
+# OS / system files
+.DS_Store
+Thumbs.db
