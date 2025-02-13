@@ -12,7 +12,7 @@ NODE_PREFIX = "thought_{index}"
 class Model:
 
     def __init__(self):
-        self.thought_graph = CoTGraph()
+        self.thought_graph = CoTGraph() # todo: cache this to disk via pkl
 
     def forward(self, prompt: str):
         # extract reasoning from completion
@@ -23,6 +23,10 @@ class Model:
         reasoning_steps = extractor.split_reasoning_steps(reasoning)
 
         logger.info("Generated completion and parsed reasoning steps.")
+        print(answer)
+        if not reasoning_steps:
+            logger.error("No reasoning steps found.")
+            return
 
         # add to thought graph
         for i in range(len(reasoning_steps[:MAX_GRAPH_SIZE])):
@@ -47,7 +51,7 @@ class Model:
                 current_node,
                 weight=weight,
             )
-            self.logger.info(f"Added edge between {prev_node} and {current_node} with weight={weight}.")
+            logger.info(f"Added edge between {prev_node} and {current_node} with weight={weight}.")
 
         # visualize
         self.thought_graph.visualize()
@@ -57,4 +61,4 @@ class Model:
 
 if __name__ == "__main__":
     m = Model()
-    m.forward("how should i think about multiplication?")
+    m.forward("how should i think about addition?")

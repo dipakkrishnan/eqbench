@@ -11,4 +11,5 @@ dependencies = [
     "networkx>=3.4.2",
     "numpy>=2.2.2",
     "openai>=1.61.1",
+    "scipy>=1.15.1",
 ]
