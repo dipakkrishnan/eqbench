@@ -27,12 +27,14 @@ class Extractor:
 
         if start > len("\\boxed{") - 1 and end != -1:
             return self.content[start:end]
+
+        think_end = self.content.rfind("<think>")
+        if think_end != -1:
+            return self.content[think_end + len("<think>") :].strip().lstrip(">")
         return None
 
-
-from ollama_client import generate_completion
-
-completion = generate_completion("what is 2+2?")
-dp = Extractor(completion)
-print(dp.extract_reasoning())
-print(dp.extract_answer())
+    def split_reasoning_steps(self, reasoning_text: str):
+        sentences = reasoning_text.split(
+            ".\n\n"
+        )  # Splitting based on sentence delimiters
+        return [sentence.strip() for sentence in sentences if sentence.strip()]

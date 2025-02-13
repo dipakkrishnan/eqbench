@@ -1,11 +1,16 @@
 import os
-import openai
-import numpy
+from openai import OpenAI
 
-client = openai.OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
-def generate_embeddings(input_text: list[str], model: str = "text-embedding-3-small"):
-    response = client.embeddings.create(
-        model=model, input=input_text
-    )
-    return [data["embedding"] for data in response["data"]]
+
+def generate_embeddings(text: str, model: str = "text-embedding-3-small"):
+    text = text.replace("\n", " ")
+    return client.embeddings.create(input=[text], model=model).data[0].embedding
+
+
+def bulk(texts: list[str]):
+    embeddings: list[list[float]] = []
+    for text in texts:
+        embeddings.append(generate_embeddings(text))
+    return embeddings
